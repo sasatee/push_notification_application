@@ -7,6 +7,8 @@ export default function Index() {
   const [token, setToken] = useState(null);
   const [notification, setNotification] = useState(null);
 
+  console.log("message save in USESTATE HOOK: ",notification)
+
   // Request Notification Permission
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
@@ -15,9 +17,9 @@ export default function Index() {
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
     if (enabled) {
-      console.log("auth status:", authStatus);
+      //console.log("auth status:", authStatus);
     } else {
-      console.log("Notification permission not granted");
+      console.log("auth permission not granted");
     }
   };
 
@@ -26,28 +28,28 @@ export default function Index() {
     try {
       const fcmToken = await messaging().getToken();
       if (fcmToken) {
-        console.log("FCM clound messaging Token is:", fcmToken);
+        console.log("FCM Token:", fcmToken);
         setToken(fcmToken);
 
         // Send this token to your server to register the device for notifications
         // await registerDeviceWithServer(fcmToken);
       } else {
-        console.log("Failed to get FCM token");
+        console.log("Failed to get  token");
       }
     } catch (error) {
-      console.log("Error getting FCM token:", error);
+      console.log("Error token:", error);
     }
   };
 
   // Handle Incoming Messages (Foreground)
   const handleIncomingMessages = () => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.log("message arrive:", JSON.stringify(remoteMessage));
+    const unsubscribe = messaging().onMessage(async (msg) => {
+      
       Alert.alert(
-        "New FCM Message",
-        remoteMessage.notification?.title || "Notification received"
+       msg?.data?.title,
+       msg?.data?.message
       );
-      setNotification(remoteMessage.notification);
+      setNotification(msg?.data);
     });
 
     return unsubscribe; 
@@ -55,8 +57,8 @@ export default function Index() {
 
   
   const handleBackgroundMessages = () => {
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log("Message handled in the background!", remoteMessage);
+    messaging().setBackgroundMessageHandler(async (msg) => {
+      console.log("Message handled in the background!", msg);
     });
   };
 
@@ -78,7 +80,7 @@ export default function Index() {
     const unsubscribeForegroundMessages = handleIncomingMessages(); 
     handleBackgroundMessages();
 
-    // Clean up when component unmount
+    // Clean up when component unmount/unsubscribe
     return () => {
       unsubscribeForegroundMessages();
     };
@@ -88,15 +90,15 @@ export default function Index() {
       <Text>FCM Token:</Text>
       <Text selectable>{token || "No token generated"}</Text>
 
-      {/* {notification && (
+      {notification && (
         <View>
           <Text>Notification Title: {notification.title}</Text>
-          <Text>Notification Body: {notification.body}</Text>
+          <Text>Notification Body: {notification.message}</Text>
         </View>
-      )} */}
+      )}
 
       <Button
-        title="Unsubscribe from Notifications"
+        title="Unmounted/unSubcribe"
         onPress={unsubcribeFn}
       />
     </View>
