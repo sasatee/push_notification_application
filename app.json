@@ -16,10 +16,12 @@
       "supportsTablet": true
     },
     "android": {
+       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.agi_server.appname"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +33,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b2de7d1c-0f8d-40e5-a2dc-ac1e79a5faa8"
+      }
     }
   }
 }

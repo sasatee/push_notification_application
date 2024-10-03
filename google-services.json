@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "898114004849",
+    "firebase_url": "https://project-management-86566-default-rtdb.firebaseio.com",
+    "project_id": "project-management-86566",
+    "storage_bucket": "project-management-86566.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898114004849:android:2deda30a861b06952a38d0",
+        "android_client_info": {
+          "package_name": "com.agi_server.appname"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd_eP_qvqb4cZwuaCCUmOPhPquWH0h5Kg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
